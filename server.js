@@ -20,8 +20,9 @@ app.get('/api/getUserInfo/:token/:userID', function(request, response) {
   var token = request.params.token // Get token from URL param (Super secure)
   console.log(userID)
   console.log(token)
-  if(token != Math.floor(new Date() / 1000)) {
+  if(token != Math.floor(new Date() / 1000 - 1)) {
     response.send("403") // Deny request if token is incorrect
+    console.log(Math.floor(new Date() / 1000 - 1))
   } else {
     jsonfile.readFile(userData, function (err, obj) {
     if (err) console.error(err)
