@@ -4,16 +4,26 @@
 // init project
 const express = require('express');
 const app = express();
+const jsonfile = require('jsonfile')
+const userData = './data.json'
 
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
-
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
-
-// http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/views/index.html');
+  response.send(`Hello World! There is nothing here. Maybe you're looking for the api?`)
+});
+
+app.get('/api/', function(request, response) {
+  response.send('200') // Responds to health check
+});
+
+app.get('/api/getUserInfo', function(request, response) {
+  response.send('200') // Responds to health check
+});
+
+app.get('/api/leakUserInfo', function(request, response) {
+  jsonfile.readFile(userData, function (err, obj) {
+  if (err) console.error(err)
+    response.send(obj) // Leaks database, oh nooooooo
+  })
 });
 
 // listen for requests :)
