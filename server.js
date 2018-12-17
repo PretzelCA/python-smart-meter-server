@@ -15,14 +15,21 @@ app.get('/api/', function(request, response) {
   response.send('200') // Responds to health check
 });
 
-app.get('/api/getUserInfo/:userID', function(request, response) {
+app.get('/api/getUserInfo/:token/:userID', function(request, response) {
   var userID = request.params.userID // Get user ID from URL param
+  var token = request.params.token // Get token from URL param (Super secure)
   console.log(userID)
-  jsonfile.readFile(userData, function (err, obj) {
-  if (err) console.error(err)
-    console.log(obj.userID)
-    response.send(obj.userID) // Returns infomation about requested user
-  })});
+  console.log(token)
+  if(token != Math.floor(new Date() / 1000)) {
+    response.send("403") // Deny request if token is incorrect
+  } else {
+    jsonfile.readFile(userData, function (err, obj) {
+    if (err) console.error(err)
+
+      response.send(obj[userID]) // Returns infomation about requested user
+    })    
+  }
+});
 
 app.get('/api/leakUserInfo', function(request, response) {
   jsonfile.readFile(userData, function (err, obj) {
