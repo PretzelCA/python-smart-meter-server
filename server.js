@@ -15,9 +15,11 @@ app.get('/api/', function(request, response) {
   response.send('200') // Responds to health check
 });
 
-app.get('/api/getUserInfo', function(request, response) {
-  response.send('200') // Responds to health check
-});
+app.get('/api/getUserInfo/:userId', function(request, response) {
+  jsonfile.readFile(userData, function (err, obj) {
+  if (err) console.error(err)
+    response.send(obj.params) // Leaks database, oh nooooooo
+  })});
 
 app.get('/api/leakUserInfo', function(request, response) {
   jsonfile.readFile(userData, function (err, obj) {
