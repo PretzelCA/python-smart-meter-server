@@ -3,5 +3,10 @@
     "name" : "B",
     "credits" : "500",
     "tamper" : 0
+  },
+  "test" : {
+    "name" : "C",
+    "credits" : "10",
+    "tamper" : 1
   }
 }

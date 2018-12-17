@@ -15,10 +15,13 @@ app.get('/api/', function(request, response) {
   response.send('200') // Responds to health check
 });
 
-app.get('/api/getUserInfo/:userId', function(request, response) {
+app.get('/api/getUserInfo/:userID', function(request, response) {
+  var userID = request.params.userID // Get user ID from URL param
+  console.log(userID)
   jsonfile.readFile(userData, function (err, obj) {
   if (err) console.error(err)
-    response.send(obj.params) // Leaks database, oh nooooooo
+    console.log(obj.userID)
+    response.send(obj.userID) // Returns infomation about requested user
   })});
 
 app.get('/api/leakUserInfo', function(request, response) {
